@@ -9,13 +9,13 @@ const Hero = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch('http://localhost:8000/api/blogs/669bdbe955cf46e1152b3343', {
+      const res = await fetch('/api/blogs/669bdbe955cf46e1152b3343', {
         method: 'GET'
       });
-      const res2 = await fetch('http://localhost:8000/api/blogs/669bdc1455cf46e1152b3345', {
+      const res2 = await fetch('/api/blogs/669bdc1455cf46e1152b3345', {
         method: 'GET'
       });
-      const res3 = await fetch('http://localhost:8000/api/blogs/669bf9640993facbd8635b9d', {
+      const res3 = await fetch('/api/blogs/669bf9640993facbd8635b9d', {
         method: 'GET'
       });
       const data = await res.json();

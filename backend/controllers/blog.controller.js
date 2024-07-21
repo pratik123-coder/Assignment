@@ -38,28 +38,38 @@ export const createBlog = async (req, res) => {
 
 
 export const getBlogs = async (req, res) => {
+  const page = parseInt(req.query.page, 10) || 1;
+  const pageSize = parseInt(req.query.pageSize, 10) || 9;
+  const skip = (page - 1) * pageSize;
+  
   try {
-    const blogs = await db.blog.findMany({
-      include: {
-        author: {
-          select: {
-            name: true,
-          }
-        }
-      }
-    });
+    const [blogs, total] = await Promise.all([
+      db.blog.findMany({
+        skip,
+        take: pageSize,
+        include: {
+          author: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      }),
+      db.blog.count(),
+    ]);
 
-    res.status(200).json({ blogs });
+    res.status(200).json({ blogs, total });
   } catch (error) {
     console.error("Error in retrieving blogs:", error.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 export const getBlogById = async (req, res) => {
   try {
-    const { blogId } = req.params;
+    const { id } = req.params;
     const blog = await db.blog.findUnique({
-      where: { id: blogId },
+      where: { id: id },
       include: {
         author: {
           select: {
@@ -79,16 +89,12 @@ export const getBlogById = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
-
 export const BlogLike = async (req, res) => {
   try {
-    if (!req.user) {
-      return res.status(401).json({ error: "Unauthorized, user not authenticated" });
-    }
-    const { blogId } = req.params; // blog ID is passed as a URL parameter
+    const { id } = req.params; // blog ID is passed as a URL parameter
 
     // Find the blog by ID
-    const blog = await db.blog.findUnique({ where: { id: blogId } });
+    const blog = await db.blog.findUnique({ where: { id: id } });
 
     if (!blog) {
       return res.status(404).json({ error: "Blog not found" });
@@ -96,7 +102,7 @@ export const BlogLike = async (req, res) => {
 
     // Increment the like count
     const updatedBlog = await db.blog.update({
-      where: { id: blogId },
+      where: { id: id },
       data: { likes: blog.likes + 1 },
     });
 

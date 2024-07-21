@@ -14,10 +14,7 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 const __dirname = path.resolve();
 
-app.use(cors({
-  origin: ["http://localhost:8000"],
-  methods: ["GET", "POST"],
-}));
+app.use(cors());
 
 app.use(express.json());  // to parse the incoming requests from JSON payloads (from req.body)
 app.use(cookieParser()); // middleware for cookie
@@ -25,10 +22,10 @@ app.use(cookieParser()); // middleware for cookie
 app.use("/api/auth", authRoutes);
 app.use("/api/blogs", blogRoutes);
 
-// app.use(express.static(path.join(__dirname, "/frontend/dist")));
+app.use(express.static(path.join(__dirname, "/frontend2/dist")));
 
 app.get("*", (req, res) => {
-  // res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
   res.send("Hello World");
 });
 

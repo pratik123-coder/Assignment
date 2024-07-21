@@ -6,7 +6,7 @@
   "scripts": {
     "server": "nodemon backend/server.js",
     "start": "node backend/server.js",
-    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
+    "build": "npm install && npm install --prefix frontend2 && npm run build --prefix frontend2"
   },
   "type": "module",
   "keywords": [],
@@ -28,6 +28,7 @@
     "nodemon": "^3.0.3"
   },
   "devDependencies": {
+    "daisyui": "^4.12.10",
     "prisma": "^5.17.0"
   }
 }

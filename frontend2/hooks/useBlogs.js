@@ -12,7 +12,7 @@ const useBlogs = () => {
   const fetchBlogs = async (page) => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:8000/api/blogs/blogs?page=${page}&pageSize=${pageSize}`);
+      const res = await fetch(`/api/blogs/blogs?page=${page}&pageSize=${pageSize}`);
       
       if (!res.ok) {
         const text = await res.text();

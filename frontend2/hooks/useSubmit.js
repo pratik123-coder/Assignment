@@ -16,7 +16,7 @@ const useSubmitBlog = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:8000/api/blogs/create', {
+      const response = await fetch('/api/blogs/create', {
         method: 'POST',
         body: formData,
       });

@@ -5,7 +5,7 @@ const useLike = (initialLikes, id) => {
 
   const likeBlog = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/api/blogs/blogs/${id}/like`, {
+      const response = await fetch(`/api/blogs/blogs/${id}/like`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

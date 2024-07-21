@@ -10,7 +10,7 @@ const useBlogById = (id) => {
     setLoading(true);
     toast.loading('Loading...');
     try {
-      const response = await fetch(`http://localhost:8000/api/blogs/${id}`);
+      const response = await fetch(`/api/blogs/${id}`);
       if (!response.ok) throw new Error('Blog not found');
       const result = await response.json();
       setData(result);
